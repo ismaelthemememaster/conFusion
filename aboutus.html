@@ -3,7 +3,6 @@
 
 <head>
 
-	
 	<!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,20 +19,20 @@
 
 	<nav class= "navbar navbar-dark navbar-expand-sm fixed-top">
 
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	
-	<a class="navbar-brand mr-auto" href="#"> Reustaurante perron </a>
-	<div class="collapse navbar-collapse" id="Navbar">	
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
-			<li class="nav-item active"><a class="nav-link" href="#">About</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-		</ul>
-	</div>	
-  </nav>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <a class="navbar-brand mr-auto" href="#">Ristorante Con Fusion</a>
+        <div class="collapse navbar-collapse" id="Navbar">	
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+                <li class="nav-item active"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+        </div>	
+    </nav>
 
     <header class="jumbotron">
         <div class="container">
@@ -41,7 +40,7 @@
                 <div class="col col-sm-12 col-md-6">
                     <ol class="col-12 breadcrumb">
                         <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="#">About Us</a></li>
+                        <li class="breadcrumb-item active">About Us</li>
                     </ol>
                     <h1>Ristorante con Fusion</h1>
                     <p>We take inspiration from the World's best cuisines, and create a unique fusion experience. Our lipsmacking creations will tickle your culinary senses!</p>
@@ -146,6 +145,15 @@
         </div>
     </footer>
     
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>$(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });    
+    </script>
+
 </body>
 
 </html>
