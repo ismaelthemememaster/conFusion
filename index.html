@@ -30,7 +30,8 @@
                     <li class="nav-item"><a class="nav-link" href="./contactus.html"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
                 </ul>
                 <span class="navbar-text">
-                    <a data-toggle="modal" data-target="#loginModal">
+                    
+                    <a  id="botonLogin">
                     <span class="fa fa-sign-in"></span> Login</a>
                 </span>
             </div>
@@ -167,7 +168,7 @@
                 
                 <div class="col-sm-3  align-self-center  align-items-center">
                     
-                    <a role="button" class="btn btn-block nav-link btn-warning" data-toggle="modal" data-target="#modalPedirMesa"><span class="fa fa-sign-in"></span>Reserve Table</a>
+                    <a role="button" id="botonMesa" class="btn btn-block nav-link btn-warning"><span class="fa fa-sign-in"></span>Reserve Table</a>
 
                 </div>
             </div>
@@ -352,6 +353,7 @@
     <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    
     <script>
     $("#carouselButton").click(function(){
         if ($("#carouselButton").children("span").hasClass('fa-pause')) {
@@ -365,6 +367,14 @@
             $("#carouselButton").children("span").addClass('fa-pause');                    
         }
     });</script>
+    <script>
+        $("#botonLogin").click(function(){
+            $('#loginModal').modal('show') 
+        });</script>
+    <script>
+        $("#botonMesa").click(function(){
+            $('#modalPedirMesa').modal('show')        
+        });</script>
     
 
 </body>
