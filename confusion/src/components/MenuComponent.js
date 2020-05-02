@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 ///import { SUICIDIO } from './components/DishdetailComponent';
 var cosa= "assets/images/angries/1.png";
 var hp= "MALDITA SEA, NO HAY INTENRET";
 var num= 1;
 
     class Menu extends Component {
-
-        
-        
-
         constructor(props) {
             super(props);
-
-            
-            
-    
             this.state = {
                 selectedDish: null
             }
@@ -30,12 +23,10 @@ var num= 1;
             
             num= num + 1;
             
-            if (num > 29)  cosa= "assets/images/angries/"+num +".jpg";
-            
-            else cosa= "assets/images/angries/"+num+".png" ;
+            if (num > 29)  {cosa= "assets/images/angries/"+num +".jpg";}
+            else {cosa= "assets/images/angries/"+num+".png";}
 
-
-            if (num >=42) num = 0;
+            if (num >=42) {num = 0;}
 
             this.setState(this);
         }
@@ -44,20 +35,9 @@ var num= 1;
     
         renderDish(dish) {
             console.log("Voy a entrar a la mierda de if para ver si esto es null");
-            if (dish != null)
-                return(
-                    <Card>
-                        <CardImg top src={dish.image} alt={dish.name} />
-                        <CardBody>
-                          <CardTitle>{dish.name}</CardTitle>
-                          <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
-                );
-            else
-                return(
-                    <div></div>
-                );
+            return(
+                    <DishDetail dish={dish}></DishDetail>
+            )
         }
     
         render() {
@@ -75,27 +55,15 @@ var num= 1;
                 );
             });
 
-            
             return (
                 <div className="container">
                     <div className="row">
                         {menu}
                     </div>
-                    <div className="row">
-                        <div  className="col-12 col-md-5 m-1">
-                            {this.renderDish(this.state.selectedDish)}
-                        </div>
+                    
+                        
+                    {this.renderDish(this.state.selectedDish)}
 
-                        <div  className="col-12 col-md-5 m-1">
-
-                            <Card onClick={() => this.suicidio()}>
-                                <CardTitle>Odio el htmml</CardTitle>
-                                <CardImg width="100%" src={cosa} alt="Suicidio.png" />
-                                Y POR SI FUERA POCO, TAMBIÉN ODIO JAVASCRIPT.
-                                APAGUE EL COMPUTADOR SI NO QUIERE QUE LE META UN HP VIRUS
-                            </Card>
-                        </div>
-                    </div>
                   
                 </div>
             );

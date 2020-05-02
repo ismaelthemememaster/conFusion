@@ -1,0 +1,91 @@
+import React, { Component } from 'react';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+
+class DishDetail extends Component {
+    constructor(props){
+        super(props);
+    }
+
+    formatDates(DayToFormat){
+        var d = DayToFormat.slice(8,10);
+        var y = DayToFormat.slice(0,4);
+        var m = DayToFormat.slice(5,7);
+        if (m == "01") {
+            return "Jan "+d+", "+y;
+        }
+        else if (m == "02") {
+            return "Feb "+d+", "+y;
+        }
+        else if (m == "03") {
+            return "Mar "+d+", "+y;
+        }
+        else if (m == "04") {
+            return "Apr "+d+", "+y;
+        }
+        else if (m == "05") {
+            return "May "+d+", "+y;
+        }
+        else if (m == "06") {
+            return "Jun "+d+", "+y;
+        }
+        else if (m == "07") {
+            return "Jul "+d+", "+y;
+        }
+        else if (m == "08") {
+            return "Aug "+d+", "+y;
+        }
+        else if (m == "09") {
+            return "Sep "+d+", "+y;
+        }
+        else if (m == "10") {
+            return "Oct "+d+", "+y;
+        }
+        else if (m == "11") {
+            return "Nov "+d+", "+y;
+        }
+        else if (m == "12") {
+            return "Dec "+d+", "+y;
+        }
+          
+    }
+    
+    renderComments(){
+        const Comments = this.props.selected.comments.map((comm) => {
+            return(
+                <div>
+                    <p>{comm.comment}</p>
+                    <p>--{comm.author}, {this.formatDates(comm.date.slice(0,10))}</p>
+                </div>
+            );
+        });
+        return Comments;
+    }
+    
+    render() {
+        const Detail = this.props.selected;
+        if (Detail != null)
+            return(
+                <div className="row">
+                    <div  className="col-12 col-md-5 m-1">
+                        <Card>
+                            <CardImg top src={Detail.image} alt={Detail.name} />
+                            <CardBody>
+                            <CardTitle>{Detail.name}</CardTitle>
+                            <CardText>{Detail.description}</CardText>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    <div  className="col-12 col-md-5 m-1">
+                        <h4>Comments</h4>
+                        {this.renderComments()}
+                    </div>
+                </div>
+            );
+        else
+            return(
+                <div></div>
+            );
+    }
+}
+
+export default DishDetail;
