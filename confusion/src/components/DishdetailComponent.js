@@ -16,7 +16,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 
                     return (
                         <li key={com.id}>
-                            <p className="text">{com.comment}</p> <p>-- {com.author}, {com.date}</p>
+                            <p className="text">{com.comment}</p> <p>-- {com.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
                         </li>
                     );
                 });
@@ -40,20 +40,22 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
         renderDish(dish){
 
             return(
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg top src={dish.image} alt={dish.name} />
-                            <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                            </CardBody>
-                        </Card>
-                    </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg top src={dish.image} alt={dish.name} />
+                                <CardBody>
+                                    <CardTitle>{dish.name}</CardTitle>
+                                    <CardText>{dish.description}</CardText>
+                                </CardBody>
+                            </Card>
+                        </div>  
 
-                    <div className="col-12 col-md-5 m-1">
-                        <h4>Comments</h4>
-                        {this.renderComments(this.props.dish.comments)}
+                        <div className="col-12 col-md-5 m-1">
+                            <h4>Comments</h4>
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
                     </div>
                 </div>
             )
@@ -63,11 +65,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
             
             if (this.props.dish != null)
                 return(
-                    
-                        
                     this.renderDish(this.props.dish)
-                        
-                    
                 );
             else
                 return(
