@@ -3,9 +3,12 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 
     class DishDetail extends Component {
 
-        constructor(props) {
-            super(props);
+        componentDidMount(){
+            console.log("Se acaba de montar el deshDetail");
+        }
 
+        componentDidUpdate(){
+            console.log("La base de datos de platos ha sido actalizada");
         }
 
         renderComments(comments){
@@ -62,6 +65,8 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
         }
     
         render() {
+
+            console.log("Cada renderizada que hace este codigo me quita dos meses de vida");
             
             if (this.props.dish != null)
                 return(
