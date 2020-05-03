@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
-    class DishDetail extends Component {
 
-        componentDidMount(){
-            console.log("Se acaba de montar el deshDetail");
-        }
-
-        componentDidUpdate(){
-            console.log("La base de datos de platos ha sido actalizada");
-        }
-
-        renderComments(comments){
+    
+        function RenderComments({comments}){
 
             if (comments != null){
 
@@ -40,7 +32,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
             }
         }
 
-        renderDish(dish){
+        function RenderDish({dish}){
 
             return(
                 <div className="container">
@@ -57,20 +49,20 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 
                         <div className="col-12 col-md-5 m-1">
                             <h4>Comments</h4>
-                            {this.renderComments(this.props.dish.comments)}
+                            <RenderComments comments = {dish.comments} />
                         </div>
                     </div>
                 </div>
             )
         }
     
-        render() {
+        const  DishDetail = (props) => {
 
             console.log("Cada renderizada que hace este codigo me quita dos meses de vida");
             
-            if (this.props.dish != null)
+            if (props.dish != null)
                 return(
-                    this.renderDish(this.props.dish)
+                    <RenderDish dish= {props.dish} />
                 );
             else
                 return(
@@ -80,9 +72,5 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 
         ///console.log("copiar el renderDish con el details");
 
-        
-            
-    }
-    
 
-export default DishDetail;
+    export default DishDetail;
