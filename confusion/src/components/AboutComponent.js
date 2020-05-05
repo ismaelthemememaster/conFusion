@@ -9,7 +9,7 @@ function About(props) {
 
     const leaders = props.leaders.map((leader) => {
         return (
-            <div className="col-12 col-md-5 m-1"  key={leader.id}>
+            <div key={leader.id}>
                     <RenderLeader leader={leader}/>
             </div>
         );
@@ -17,14 +17,18 @@ function About(props) {
 
     function RenderLeader({leader}) {
         return (
-            <Card>
-                <Link to={`/aboutus/${leader.id}`} >
-                    <CardImg width="100%" src={leader.image} alt={leader.name} />
-                    <CardImgOverlay>
-                        <CardTitle>{leader.name}</CardTitle>
-                    </CardImgOverlay>
-                </Link>
-            </Card>
+
+            <div class="media">
+                <div class="media-header m-3">
+                <img src={leader.image} alt={leader.name}></img>
+                </div>
+                <div class="media-body m-3">
+                    <h2 class="mt-0">{leader.name}</h2>
+                    <h4 class="mt-0">{leader.designation}</h4>
+                    <p class="d-none d-sm-block">{leader.description}</p>
+                </div>
+            </div>
+
         );
     }
 
