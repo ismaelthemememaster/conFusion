@@ -10,15 +10,18 @@ import { Link } from 'react-router-dom';
                 let comentarios = comments.map((com) => {
 
                     return (
+                        
                         <li key={com.id}>
                             <p className="text">{com.comment}</p> <p>-- {com.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
                         </li>
+               
                     );
                 });
 
                 return(
                     <ul className="list-unstyled">
                         {comentarios}
+                        <button type="button" class="btn btn-outline-secondary"><i className="fa fa-pencil"></i>   Submit Comment</button>
                     </ul>
                 );
 
