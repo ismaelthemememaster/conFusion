@@ -1,60 +1,161 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem,
+    Button, Modal, ModalHeader, ModalBody,
+    Form, FormGroup, Label } from 'reactstrap';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
-        function RenderComments({comments}){
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
 
-            if (comments != null){
+class CommentForm extends Component {
 
-                let comentarios = comments.map((com) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+          isModal2Open: false
+    };
 
-                    return (
+    this.handleSubmit2 = this.handleSubmit2.bind(this);
+    this.toggleModal2 = this.toggleModal2.bind(this);
+
+    }
+
+    handleSubmit2(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault();
+        console.log("hizo el submit");
+    }
+
+    toggleModal2() {
+        this.setState({
+          isModal2Open: !this.state.isModal2Open
+        });
+        console.log("hizo el toggle");
+    }
+
+    render(){
+
+        return(
+
+            <React.Fragment>
+
+                <button outline onClick={this.toggleModal2} type="button" class="btn btn-outline-secondary"><i className="fa fa-pencil"></i>   Submit Comment</button>
+            
+                <Modal isOpen={this.state.isModal2Open} toggle={this.toggleModal2}>
+                    <ModalHeader toggle={this.toggleModal2}>Submit Comment</ModalHeader>
+                    <ModalBody>
+                        <LocalForm onSubmit={(values) => this.handleSubmit2(values)}>
+                            
+                            <FormGroup>
+                                <Label htmlFor="rating" >Rating</Label>
+                                
+                                    <Control.select id="rating" model=".rating" className="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    </Control.select>
+                            </FormGroup>
+                                
+                            <FormGroup>
+                                <Label htmlFor="name" >Your Name</Label>
+                                <Control.text model=".author" id="author" name="author"
+                                    placeholder="Your Name"
+                                    className="form-control"
+                                    validators={{
+                                        minLength: minLength(3), maxLength: maxLength(15)
+                                    }}
+                                        />
+                                <Errors
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    messages={{
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                />
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Label htmlFor="comment" >Comment</Label>
+                                    <Control.textarea model=".comment" id="comment" name="comment"
+                                        rows="6"
+                                        className="form-control" />
+                            </FormGroup>
+
+                            
+                            <Button type="submit" color="primary">
+                                Submit
+                            </Button>
+                            
+                        </LocalForm>
                         
-                        <li key={com.id}>
-                            <p className="text">{com.comment}</p> <p>-- {com.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
-                        </li>
-               
-                    );
-                });
+                    </ModalBody>
+                </Modal>
 
-                return(
-                    <ul className="list-unstyled">
-                        {comentarios}
-                        <button type="button" class="btn btn-outline-secondary"><i className="fa fa-pencil"></i>   Submit Comment</button>
-                    </ul>
+            </React.Fragment>
+            
+        )
+
+    }
+    
+}
+
+    function RenderComments({comments}){
+
+        if (comments != null){
+
+            let comentarios = comments.map((com) => {
+
+                return (
+                    
+                    <li key={com.id}>
+                        <p className="text">{com.comment}</p> <p>-- {com.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
+                    </li>
+            
                 );
-
-            }
-            else {
-
-                return(
-                    <div>
-                    </div>
-                )
-            }
-        }
-
-        function RenderDish({dish}){
+            });
 
             return(
-                
-                <Card>
-                    <CardImg top src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-                        
+                <ul className="list-unstyled">
+                    {comentarios}
+                    <CommentForm />
+                </ul>
+            );
+
+        }
+        else {
+
+            return(
+                <div>
+                </div>
             )
         }
-    
-        const  DishDetail = (props) => {
+    }
 
-            console.log("Cada renderizada que hace este codigo me quita dos meses de vida");
+    function RenderDish({dish}){
+
+        return(
             
-            if (props.dish != null)
+            <Card>
+                <CardImg top src={dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>           
+        )
+    }
+
+    const  DishDetail = (props) => {
+
+        console.log("Cada renderizada que hace este codigo me quita dos meses de vida");
+        
+        if (props.dish != null)
             return (
                 <div className="container">
                 <div className="row">
@@ -79,11 +180,11 @@ import { Link } from 'react-router-dom';
                 </div>
                 </div>
             );
-            else
-                return(
-                    <div></div>
-                );
-        };
+        else
+            return(
+                <div></div>
+            );
+    };
 
         ///console.log("copiar el renderDish con el details");
 
