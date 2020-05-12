@@ -22,10 +22,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit2(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-        // event.preventDefault();
-        console.log("hizo el submit");
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     toggleModal2() {
@@ -105,7 +102,7 @@ class CommentForm extends Component {
     
 }
 
-    function RenderComments({comments}){
+function RenderComments({comments, addComment, dishId}) {
 
         if (comments != null){
 
@@ -123,7 +120,7 @@ class CommentForm extends Component {
             return(
                 <ul className="list-unstyled">
                     {comentarios}
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment} />
                 </ul>
             );
 
@@ -175,7 +172,10 @@ class CommentForm extends Component {
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <h4>Comments</h4>
-                        <RenderComments comments={props.comments} />
+                        <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id}
+                        />
                     </div>
                 </div>
                 </div>
