@@ -1,13 +1,29 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media, CardImg, CardImgOverlay, 
-    CardTitle} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media,} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { } from 'reactstrap';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
-function About(props) {
-    
+function RenderLeader({leader}) {
+    return (
 
-    const leaders = props.leaders.map((leader) => {
+        <div class="media">
+            <div class="media-header m-3">
+            <img src={baseUrl + leader.image} alt={leader.name}></img>
+            </div>
+            <div class="media-body m-3">
+                <h2 class="mt-0">{leader.name}</h2>
+                <h4 class="mt-0">{leader.designation}</h4>
+                <p class="d-none d-sm-block">{leader.description}</p>
+            </div>
+        </div>
+
+    );
+}
+
+const About = (props) => {
+
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <div key={leader.id}>
                     <RenderLeader leader={leader}/>
@@ -15,20 +31,24 @@ function About(props) {
         );
     });
 
-    function RenderLeader({leader}) {
-        return (
-
-            <div class="media">
-                <div class="media-header m-3">
-                <img src={leader.image} alt={leader.name}></img>
-                </div>
-                <div class="media-body m-3">
-                    <h2 class="mt-0">{leader.name}</h2>
-                    <h4 class="mt-0">{leader.designation}</h4>
-                    <p class="d-none d-sm-block">{leader.description}</p>
+    if (props.leaders.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
                 </div>
             </div>
-
+        );
+    }
+    else if (props.leaders.errMess) {
+        return(
+            <div className="container">
+                <div className="row"> 
+                    <div className="col-12">
+                        <h4>{props.leaders.errMess}</h4>
+                    </div>
+                </div>
+            </div>
         );
     }
 
