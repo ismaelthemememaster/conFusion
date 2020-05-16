@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem,
-    Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Label } from 'reactstrap';
+    Button, Modal, ModalHeader, ModalBody, FormGroup, Label } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
@@ -108,17 +107,6 @@ class CommentForm extends Component {
 function RenderComments({comments, postComment, dishId}) {
 
         if (comments != null){
-
-            let comentarios = comments.map((com) => {
-
-                return (
-                    
-                    <li key={com.id}>
-                        <p className="text">{com.comment}</p> <p>-- {com.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
-                    </li>
-            
-                );
-            });
 
             return(
                 <ul className="list-unstyled">
