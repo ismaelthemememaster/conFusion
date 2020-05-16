@@ -217,6 +217,22 @@
       "comment": "WHAT THE HELL??!, WHY DOES THIS THING ALSO HAS PINEAPPLE??!!\nI'M PRETTY SURE THIS IS NOT SUPPOSED TO HAVE PINEAPPLE ON IT",
       "date": "2020-05-14T02:36:35.517Z",
       "id": 21
+    },
+    {
+      "dishId": 3,
+      "rating": "5",
+      "author": "Ismaelo",
+      "comment": "Eyyyyyyyy boss, this one is actually great",
+      "date": "2020-05-16T01:40:03.340Z",
+      "id": 22
+    },
+    {
+      "dishId": 2,
+      "rating": "3",
+      "author": "Ismaelo",
+      "comment": "probably tasty, but my doctor said no, so i can't even have a taste",
+      "date": "2020-05-16T01:43:18.394Z",
+      "id": 23
     }
   ],
   "promotions": [
