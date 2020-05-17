@@ -20,6 +20,7 @@ class CommentForm extends Component {
 
     this.handleSubmit2 = this.handleSubmit2.bind(this);
     this.toggleModal2 = this.toggleModal2.bind(this);
+    
 
     }
 
@@ -41,7 +42,7 @@ class CommentForm extends Component {
             <React.Fragment>
 
                 <button outline onClick={this.toggleModal2} type="button" class="btn btn-outline-secondary"><i className="fa fa-pencil"></i>   Submit Comment</button>
-            
+                
                 <Modal isOpen={this.state.isModal2Open} toggle={this.toggleModal2}>
                     <ModalHeader toggle={this.toggleModal2}>Submit Comment</ModalHeader>
                     <ModalBody>
