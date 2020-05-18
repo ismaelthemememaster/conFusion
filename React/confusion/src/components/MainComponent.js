@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import React, { Component } from 'react'; 
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import DishDetail from './DishdetailComponent';
@@ -33,10 +32,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Main extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.fetchDishes();
