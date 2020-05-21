@@ -18,7 +18,7 @@ class Menu extends Component {
 
     render() {  
 
-        
+        const { navigate } = this.props.navigation;
 
 
         const renderMenuItem = ({item, index}) => {
@@ -35,8 +35,6 @@ class Menu extends Component {
             );
         };
 
-        const { navigate } = this.props.navigation;
-    
         return (
                 <FlatList 
                     data={this.state.dishes}
