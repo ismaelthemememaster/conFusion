@@ -1,20 +1,21 @@
 
-  \{^_^}/ hi!
+  IF YOU SEE THIS, RUN
+  run the server again because you're not supposed to see this file, probably  :v
 
   Loading db.json
   Done
 
   Resources
-  http://localhost:3001/dishes
-  http://localhost:3001/comments
-  http://localhost:3001/promotions
-  http://localhost:3001/leaders
-  http://localhost:3001/feedback
+  http://192.168.1.69:3001/dishes
+  http://192.168.1.69:3001/comments
+  http://192.168.1.69:3001/promotions
+  http://192.168.1.69:3001/leaders
+  http://192.168.1.69:3001/feedback
 
   Home
-  http://localhost:3001
+  http://192.168.1.69:3001
 
   Type s + enter at any time to create a snapshot of the database
   Watching...
 
-¨Desea terminar el trabajo por lotes (S/N)? 
+ï¿½Desea terminar el trabajo por lotes (S/N)? 
