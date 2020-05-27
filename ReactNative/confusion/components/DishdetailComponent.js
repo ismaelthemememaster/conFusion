@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Text, View, ScrollView, FlatList, Modal, Button } from 'react-native';
+import { Card, Icon, Rating, Input  } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { connect } from 'react-redux';
@@ -46,6 +46,7 @@ function RenderDish(props) {
                                 name={'pencil'}
                                 type='font-awesome'
                                 color='#512DA8'
+                                onPress={() => props.onPress2()}
                                 />
                         </View>
                 </Card>
@@ -84,9 +85,33 @@ function RenderComments(props) {
 
 class DishDetail extends Component {    
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            rating: 1,
+            autor: '',
+            comment: '',
+            showModal: false
+        }
+    }
+    
     static navigationOptions = {
         title: 'Dish Details'
     };
+
+    toggleModal() {
+        this.setState({showModal: !this.state.showModal});
+    }
+
+    resetForm() {
+        this.setState({
+            rating: 1,
+            autor: '',
+            comment: '',
+            showModal: false
+        });
+    }
 
     markFavorite(dishId) {
         this.props.postFavorite(dishId);
@@ -99,8 +124,55 @@ class DishDetail extends Component {
                 <RenderDish dish={this.props.dishes.dishes[+dishId]}
                     favorite={this.props.favorites.some(el => el === dishId)}
                     onPress={() => this.markFavorite(dishId)} 
+                    onPress2={() => this.toggleModal()} 
                     />
                 <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
+                <Modal animationType = {"slide"} transparent = {false}
+                    visible = {this.state.showModal}
+                    onDismiss = {() => this.toggleModal() }
+                    onRequestClose = {() => this.toggleModal() }>
+                    <View style = {{justifyContent: 'center', margin: 20}}>
+                        <Rating
+                            showRating
+                            count={5}
+                            reviews={["1", "2", "3", "4", "5"]}
+                            defaultRating={5}
+                            size={20}
+                            />
+                        <Input
+                            placeholder=' Author'
+                            leftIcon={
+                                <Icon
+                                name={'user-o'}
+                                size={24}
+                                color='black'
+                                type='font-awesome'
+                                />
+                            }/>
+                        <Input
+                            placeholder=' Comment'
+                            leftIcon={
+                                <Icon
+                                name={'comment-o'}
+                                size={24}
+                                color='black'
+                                type='font-awesome'
+                                />
+                            }/>
+                        <Button 
+                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            color="#512DA8"
+                            title="SUBMIT" 
+                            />
+                        </View>
+                        <View style = {{justifyContent: 'center', margin: 20}}>
+                        <Button 
+                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            color="gray"
+                            title="CANCEL" 
+                            />
+                    </View>
+                </Modal>
             </ScrollView>
         );
     }
