@@ -5,7 +5,7 @@ import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import { postFavorite } from '../redux/ActionCreators';
+import { postFavorite, postComment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
   }
 
 const mapDispatchToProps = dispatch => ({
-    postFavorite: (dishId) => dispatch(postFavorite(dishId))
+    postFavorite: (dishId) => dispatch(postFavorite(dishId)),
+    postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
 })
 
 function RenderDish(props) {
@@ -90,7 +91,7 @@ class DishDetail extends Component {
 
         this.state = {
             rating: 1,
-            autor: '',
+            author: '',
             comment: '',
             showModal: false
         }
@@ -104,10 +105,19 @@ class DishDetail extends Component {
         this.setState({showModal: !this.state.showModal});
     }
 
+    handleComment(dishId, rating, author, comment) {
+        console.log(JSON.stringify(this.state));
+
+        this.props.postComment(dishId, rating, author, comment);
+        
+
+        this.toggleModal();
+    }
+
     resetForm() {
         this.setState({
             rating: 1,
-            autor: '',
+            author: '',
             comment: '',
             showModal: false
         });
@@ -119,12 +129,16 @@ class DishDetail extends Component {
 
     render() {
         const dishId = this.props.navigation.getParam('dishId','');
+        const rating = 1;
+        const author = '';
+        const comment= '';
+
         return(
             <ScrollView>
                 <RenderDish dish={this.props.dishes.dishes[+dishId]}
                     favorite={this.props.favorites.some(el => el === dishId)}
                     onPress={() => this.markFavorite(dishId)} 
-                    onPress2={() => this.toggleModal()} 
+                    onPress2={() => this.toggleModal()}
                     />
                 <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
                 <Modal animationType = {"slide"} transparent = {false}
@@ -138,9 +152,11 @@ class DishDetail extends Component {
                             reviews={["1", "2", "3", "4", "5"]}
                             defaultRating={5}
                             size={20}
+                            onFinishRating={this.rating}
                             />
                         <Input
                             placeholder=' Author'
+                            onChangeText={value => this.setState({ author: value })}
                             leftIcon={
                                 <Icon
                                 name={'user-o'}
@@ -151,6 +167,7 @@ class DishDetail extends Component {
                             }/>
                         <Input
                             placeholder=' Comment'
+                            onChangeText={value => this.setState({ comment: value })}
                             leftIcon={
                                 <Icon
                                 name={'comment-o'}
@@ -160,7 +177,7 @@ class DishDetail extends Component {
                                 />
                             }/>
                         <Button 
-                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            onPress={() => this.handleComment(dishId, rating, author, comment)}
                             color="#512DA8"
                             title="SUBMIT" 
                             />
