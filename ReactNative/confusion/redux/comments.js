@@ -9,10 +9,8 @@ export const comments = (state = { errMess: null, comments:[]}, action) => {
       return {...state, errMess: action.payload};
 
 
-
-      
     case ActionTypes.ADD_COMMENT:
-      return {...state, errMess: action.payload};
+      return {...state, errMess: null, comments: action.payload};
 
 
     default:
