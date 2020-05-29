@@ -7,16 +7,17 @@ import { postFavorite, postComment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
-      dishes: state.dishes,
-      comments: state.comments,
-      favorites: state.favorites
+        dishes: state.dishes,
+        comments: state.comments,
+        favorites: state.favorites
     }
-  }
+}
 
 const mapDispatchToProps = dispatch => ({
     postFavorite: (dishId) => dispatch(postFavorite(dishId)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
 })
+
 
 function RenderDish(props) {
 
@@ -65,7 +66,7 @@ function RenderComments(props) {
         return (
             <View key={index} style={{margin: 10}}>
                 <Text style={{fontSize: 14}}>{item.comment}</Text>
-                <Text style={{fontSize: 12}}>{item.rating} Stars</Text>
+                <Rating imageSize={20} readonly startingValue={item.rating} style={{ flexDirection: 'row' }}/>
                 <Text style={{fontSize: 12}}>{'-- ' + item.author + ', ' + item.date } </Text>
             </View>
         );
@@ -108,8 +109,8 @@ class DishDetail extends Component {
     handleComment() {
         console.log(JSON.stringify(this.state));
         this.toggleModal();
-        this.props.postComment(this.props.navigation.getParam('dishId', ''), this.state.rating, this.state.author, this.state.comment);
 
+        this.props.postComment(this.props.navigation.getParam('dishId', ''), this.state.rating, this.state.author, this.state.comment);
     }
 
     markFavorite(dishId) {
@@ -129,7 +130,14 @@ class DishDetail extends Component {
                     onPress={() => this.markFavorite(dishId)} 
                     onPress2={() => this.toggleModal(dishId)}
                     />
+
+                {console.log("ME VOY A MATAR JODEEER")}
+                {console.log(this.props.comments)}
+
                 <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
+
+                
+
                 <Modal animationType = {"slide"} transparent = {false}
                     visible = {this.state.showModal}
                     onDismiss = {() => this.toggleModal() }

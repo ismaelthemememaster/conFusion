@@ -154,9 +154,12 @@ export const addFavorite = (dishId) => ({
     payload: dishId
 });
 
+
 export const postComment = (dishId,rating,author,comment)  => (dispatch) => {
 
     setTimeout(() => {
+        console.log("entro al postcomment:");
+        console.log(dishId+rating+author+comment);
 
         const newComment = {
             dishId: dishId,
@@ -195,5 +198,5 @@ export const postComment = (dishId,rating,author,comment)  => (dispatch) => {
 
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
-    payload: comment
+    payload: comment,
   });

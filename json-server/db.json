@@ -297,6 +297,38 @@
       "comment": "Uma delicia",
       "date": "2020-05-28T18:26:43.749Z",
       "id": 31
+    },
+    {
+      "dishId": 0,
+      "rating": 2,
+      "author": "Mi jefa",
+      "comment": "Maluco",
+      "date": "2020-05-28T18:50:13.429Z",
+      "id": 32
+    },
+    {
+      "dishId": 0,
+      "rating": 5,
+      "author": "Tu",
+      "comment": "Weno",
+      "date": "2020-05-28T19:11:15.823Z",
+      "id": 33
+    },
+    {
+      "dishId": 1,
+      "rating": 4,
+      "author": "Yo",
+      "comment": "Bali",
+      "date": "2020-05-28T19:23:59.894Z",
+      "id": 34
+    },
+    {
+      "dishId": 0,
+      "rating": 0,
+      "author": "Yo",
+      "comment": "No",
+      "date": "2020-05-28T19:28:41.087Z",
+      "id": 35
     }
   ],
   "promotions": [
