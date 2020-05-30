@@ -169,3 +169,8 @@ export const addComment=(dishId,rating,author,comment)=>({
         date:comment.date
     }
 })
+
+export const deleteFavorite = (dishId) => ({
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: dishId
+});
