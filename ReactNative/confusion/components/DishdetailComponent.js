@@ -33,6 +33,13 @@ function RenderDish(props) {
             return false;
     }
 
+    const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+        if ( dx > 200 )
+            return true;
+        else
+            return false;
+    }
+
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: (e, gestureState) => {
             return true;
@@ -44,8 +51,11 @@ function RenderDish(props) {
 
 
         onPanResponderEnd: (e, gestureState) => {
-            console.log("pan responder end", gestureState);
-            if (recognizeDrag(gestureState))
+
+            if (recognizeComment(gestureState)){
+                props.onPress2()}
+
+            else if (recognizeDrag(gestureState)){
                 Alert.alert(
                     'Add Favorite',
                     'Are you sure you wish to add ' + dish.name + ' to favorite?',
@@ -54,9 +64,10 @@ function RenderDish(props) {
                     {text: 'OK', onPress: () => {props.favorite ? console.log('Already favorite') : props.onPress()}},
                     ],
                     { cancelable: false }
-                );
+                );}
 
             return true;
+
         }
     })
 
@@ -174,8 +185,6 @@ class DishDetail extends Component {
                     onPress2={() => this.toggleModal(dishId)}
                     />
 
-                {console.log("ME VOY A MATAR JODEEER")}
-                {console.log(this.props.comments)}
 
                 <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
 
