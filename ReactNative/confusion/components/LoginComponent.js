@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { Icon, Input, CheckBox, Button } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
-import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 import { Camera, Asset } from 'expo';
 import * as ImageManipulator from 'expo-image-manipulator'
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 
 
 class LoginTab extends Component {
@@ -153,6 +154,20 @@ class RegisterTab extends Component {
         }
     }
 
+    
+
+    getImageFromGallery = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        })
+        if (!result.cancelled) {
+            this.processImage(result.uri)
+        }
+    }
+
     processImage = async (imageUri) => {
         let processedImage = await ImageManipulator.manipulateAsync(
             imageUri, 
@@ -164,7 +179,6 @@ class RegisterTab extends Component {
         console.log(processedImage);
         this.setState({imageUrl: processedImage.uri });
     }
-
     
     static navigationOptions = {
         title: 'Register',
@@ -189,7 +203,7 @@ class RegisterTab extends Component {
         return(
             <ScrollView>
             <View style={styles.container}>
-                <View style={styles.imageContainer}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                     <Image 
                         source={{uri: this.state.imageUrl}} 
                         loadingIndicatorSource={require('./images/logo.png')}
@@ -198,6 +212,10 @@ class RegisterTab extends Component {
                     <Button
                         title="Camera"
                         onPress={this.getImageFromCamera}
+                        />
+                    <Button
+                        title="Gallery"
+                        onPress={this.getImageFromGallery}
                         />
                 </View>
                 <Input

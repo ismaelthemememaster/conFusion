@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, obtainCalendarPermission  } from 'react';
 import { Text, View, StyleSheet, Picker, Switch, Button, Alert, Modal } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import * as Animatable from 'react-native-animatable';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
 
@@ -23,14 +23,33 @@ class Reservation extends Component {
         title: 'Reserve Table',
     };
 
-    resetForm() {
-        this.setState({
-            guests: 1,
-            smoking: false,
-            date: '',
-            showModal: false
-        });
+    async getDefaultCalendarSource() {
+        const calendars = await Calendar.getCalendarsAsync();
+        const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
+        return defaultCalendars[0].source;
     }
+      
+    async createCalendar() {
+        const defaultCalendarSource =
+          Platform.OS === 'ios'
+            ? await getDefaultCalendarSource()
+            : { isLocalAccount: true, name: 'Expo Calendar' };
+        const newCalendarID = await Calendar.createCalendarAsync({
+          title: 'Expo Calendar',
+          color: 'blue',
+          entityType: Calendar.EntityTypes.EVENT,
+          sourceId: defaultCalendarSource.id,
+          source: defaultCalendarSource,
+          name: 'internalCalendarName',
+          ownerAccount: 'personal',
+          accessLevel: Calendar.CalendarAccessLevel.OWNER,
+        });
+        console.log(`Your new calendar ID is: ${newCalendarID}`);
+        return newCalendarID;
+    }
+
+
+
 
     async obtainNotificationPermission() {
         let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
@@ -43,8 +62,23 @@ class Reservation extends Component {
         return permission;
     }
 
-    async presentLocalNotification(date) {
+
+    async obtainCalendarPermission() {
+        let permission = await Permissions.getAsync(Permissions.CALENDAR, Permissions.CONTACTS);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.CALENDAR, Permissions.CONTACTS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to do calendar things');
+            }
+        }
+        return permission;
+    }
+
+
+    async addReservationToCalendar(date) {
         await this.obtainNotificationPermission();
+        await this.obtainCalendarPermission();
+        newCalendarID = await this.createCalendar();
         Notifications.presentLocalNotificationAsync({
             title: 'Your Reservation',
             body: 'Reservation for '+ date + ' requested',
@@ -56,6 +90,31 @@ class Reservation extends Component {
                 vibrate: true,
                 color: '#512DA8'
             }
+        });
+
+        const details ={
+            title: "Con Fusion Table Reservation",
+            startDate: new Date(Date.parse(date)),
+            endDate: new Date(Date.parse(date)+2*60*60*1000),
+            timeZone: 'Asia/Hong_Kong',
+            location: '121, Clear Water Bay Road, Kowloon, Hong Kong'
+        }
+
+        Calendar.createEventAsync(newCalendarID.toString(), details)
+    }
+
+    handleReservation(date){
+        this.addReservationToCalendar(date)
+        this.resetForm();
+    }
+
+
+    resetForm() {
+        this.setState({
+            guests: 1,
+            smoking: false,
+            date: '',
+            showModal: false
         });
     }
 
@@ -129,9 +188,7 @@ class Reservation extends Component {
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => {this.presentLocalNotification(this.state.date);
-                                        this.resetForm();
-                                    }
+                                    onPress: () =>  this.handleReservation(this.state.date)
                                 }
                             ],
                             { cancelable: false }
