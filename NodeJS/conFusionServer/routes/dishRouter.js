@@ -192,7 +192,7 @@ dishRouter.route('/:dishId/comments/:commentId')
                 }
             }
             else{
-                err = new Error ("You are not authorized to change this comment!");
+                err = new Error ("You are not authorized to update this comment!");
                 res.statusCode =  403;
                 return next(err);
             }
